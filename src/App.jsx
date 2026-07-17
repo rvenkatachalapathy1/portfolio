@@ -85,142 +85,187 @@ const STACK = [
   { key: "ai_tools", value: "Claude Code, Cline, MCP servers" },
 ];
 
-const PROJECTS = [
+const DOMAINS = [
+  "Payment Processing",
+  "Seller Financing",
+  "Gift Card Platform",
+  "API Development",
+  "Game Development",
+  "Visualization Dashboard",
+  "Grafana",
+  "Jenkins",
+  "Selenium Automation",
+  "Observability",
+  "Fraud Prevention",
+  "Distributed Systems",
+  "Batch Processing",
+  "AI Workflows",
+  "Software Architecture & System Design",
+  "Object-Oriented Programming (OOP)",
+  "Version Control & Quality Assurance",
+  "Agile & Scrum Methodologies",
+  "Data Structures & Algorithms",
+  "Requirement Analysis & Technical Specification",
+  "Automation & Backend Testing Frameworks",
+  "DevOps & CI/CD Best Practices",
+  "Technical Documentation & Writing",
+  "Problem Solving & Issue Resolution",
+];
+
+const ALL_PROJECTS = [
   {
     name: "Drink Tracker",
     tag: "Vanilla JS · Supabase",
     desc: "Full stack real time drink tracking app for 30+ users — live leaderboard, advanced filtering, Excel export, hosted at zero ongoing cost.",
+    url: "https://rvenkatachalapathy1.github.io/neverrunning/",
+    category: "side",
   },
   {
     name: "Neural Music Generator",
     tag: "Python · RNN",
     desc: "Recurrent neural network trained on piano data to forecast sequential notes, benchmarked against human composed sequences.",
+    category: "side",
   },
   {
     name: "Housing Market Dashboard",
     tag: "JavaScript · d3.js",
     desc: "Interactive dashboard mapping 15 years of county level Zillow home value data for geographic and temporal analysis.",
+    url: "https://github.com/rakshithvenkatachalapathy/DataVisulization_FinalProject",
+    category: "side",
   },
-];
-
-const GITHUB_PROJECTS = [
   {
     name: "nodejs-expressjs-vue-app",
-    lang: "JavaScript",
+    tag: "JavaScript",
     desc: "Full stack web app built with Node.js, Express, and Vue.js end to end.",
     url: "https://github.com/rakshithvenkatachalapathy/nodejs-expressjs-vue-app",
+    category: "github",
   },
   {
     name: "Patient-vue",
-    lang: "Vue",
+    tag: "Vue",
     desc: "Vue.js patient management application prototype.",
     url: "https://github.com/rakshithvenkatachalapathy/Patient-vue",
+    category: "github",
   },
   {
     name: "CloneTwitter",
-    lang: "Ruby",
+    tag: "Ruby",
     desc: "Twitter clone built in Ruby on Rails — feed, posts, and user interactions.",
     url: "https://github.com/rakshithvenkatachalapathy/CloneTwitter",
+    category: "github",
   },
   {
     name: "vue-app-employee-search",
-    lang: "Vue",
+    tag: "Vue",
     desc: "Employee search web app built with Vue.js.",
     url: "https://github.com/rakshithvenkatachalapathy/vue-app-employee-search",
+    category: "github",
   },
   {
     name: "Shopping-Cart-application-Vue.js",
-    lang: "Vue",
+    tag: "Vue",
     desc: "Shopping cart app supporting add/remove from cart plus review creation and display.",
     url: "https://github.com/rakshithvenkatachalapathy/Shopping-Cart-application-Vue.js",
+    category: "github",
   },
   {
     name: "TreekHacks-Hackathon",
-    lang: "Next.js",
+    tag: "Next.js",
     desc: "Hackathon app built in Next.js.",
     url: "https://github.com/rakshithvenkatachalapathy/TreekHacks-Hackathon",
+    category: "github",
     starred: true,
   },
   {
     name: "ARM-Emulation-C",
-    lang: "C",
+    tag: "C",
     desc: "ARM processor emulator written in C.",
     url: "https://github.com/rakshithvenkatachalapathy/ARM-Emulation-C",
+    category: "github",
   },
   {
     name: "Property-Permits-using-Pandas",
-    lang: "Jupyter Notebook",
+    tag: "Jupyter Notebook",
     desc: "Exploratory data analysis on a San Francisco property permits dataset — pre-processing and linear correlation across fields.",
     url: "https://github.com/rakshithvenkatachalapathy/Property-Permits-using-Pandas",
+    category: "github",
   },
   {
     name: "D3.js Visualization Series",
-    lang: "JavaScript",
+    tag: "JavaScript",
     desc: "Line charts, parallel coordinates, scatter plot matrices, force displacement graphs, and choropleth maps — a set of d3.js chart types built from scratch.",
     url: "https://github.com/rakshithvenkatachalapathy/D3-Projects",
+    category: "github",
   },
-];
-
-const ML_PROJECTS = [
   {
     name: "Toll Payment Method Predictor",
-    stack: "Python · scikit-learn",
+    tag: "Python · scikit-learn",
     desc: "Classification pipeline predicting whether NYS Thruway motorists paid by cash or E-ZPass — label encoded vehicle class and entry/exit points, engineered date features, and benchmarked models on a real toll transaction dataset.",
     url: "https://github.com/rvenkatachalapathy1/toll-payment--predictor",
+    category: "ml",
   },
   {
     name: "Forest Cover Type Classification",
-    stack: "Python · scikit-learn · XGBoost · Graphviz",
+    tag: "Python · scikit-learn · XGBoost · Graphviz",
     desc: "Compared six tree based classifiers — Decision Tree, ExtraTrees, RandomForest, XGBoost, AdaBoost, and Bagging — across 581,000+ rows of soil and terrain data, using feature importance to prune 55 inputs while holding 93%+ accuracy, with tree structure visualized via Graphviz.",
     url: "https://github.com/rvenkatachalapathy1/forest-cover-classification",
+    category: "ml",
   },
   {
     name: "Consumer Complaint Classifier",
-    stack: "Python · TensorFlow · Keras (LSTM)",
+    tag: "Python · TensorFlow · Keras (LSTM)",
     desc: "LSTM text classifier routing 555,000+ CFPB consumer complaint narratives into 11 product categories, backed by a full preprocessing pipeline — tokenization, sequence padding, stopword and special character removal.",
     url: "https://github.com/rvenkatachalapathy1/consumer-complaint-classifer",
+    category: "ml",
   },
   {
     name: "Speech Based Gender Classification",
-    stack: "Python · TensorFlow · Librosa",
+    tag: "Python · TensorFlow · Librosa",
     desc: "Extracted MFCC audio features directly from raw speech recordings with Librosa and trained a deep neural network to classify speaker gender from voice alone.",
     url: "https://github.com/rvenkatachalapathy1/speech-gender-classification",
+    category: "ml",
   },
   {
     name: "Political Tweet Sentiment Classifier",
-    stack: "Python · scikit-learn",
+    tag: "Python · scikit-learn",
     desc: "Logistic regression over bag of words tweet features, tuned with grid search cross validation — surfaced a real overfitting gap between cross validation score and held out test performance worth digging into.",
     url: "https://github.com/rvenkatachalapathy1/political-tweet-classifier",
+    category: "ml",
   },
   {
     name: "Breast Cancer Diagnosis via PCA",
-    stack: "Python · scikit-learn",
+    tag: "Python · scikit-learn",
     desc: "Applied principal component analysis to the Wisconsin Diagnostic Breast Cancer dataset, reducing a 30+ feature diagnostic panel down to the components that best separate benign from malignant tumors.",
     url: "https://github.com/rvenkatachalapathy1/pca-brest-cancer-diagnosis",
+    category: "ml",
   },
   {
     name: "Hierarchical Clustering & Dendrograms",
-    stack: "Python · SciPy",
+    tag: "Python · SciPy",
     desc: "Agglomerative hierarchical clustering with Ward linkage on both a toy coordinate set and a 2,000 record 1990 U.S. Census sample, visualizing cluster structure through dendrograms.",
     url: "https://github.com/rvenkatachalapathy1/hierarchical-clustering",
+    category: "ml",
   },
   {
     name: "Diabetes Risk Prediction",
-    stack: "Python · scikit-learn",
+    tag: "Python · scikit-learn",
     desc: "Deep neural network classifier over the Pima Indians Diabetes dataset, using stratified shuffle splitting to preserve class balance across train and test sets.",
     url: "https://github.com/rvenkatachalapathy1/diabetes-risk-dnn",
+    category: "ml",
   },
   {
     name: "Fuel Efficiency Prediction",
-    stack: "Python · pandas · scikit-learn",
+    tag: "Python · pandas · scikit-learn",
     desc: "Correlation and multicollinearity analysis on the Auto MPG dataset (weight, displacement, horsepower) feeding an Elastic Net regression model for predicting fuel economy.",
     url: "https://github.com/rvenkatachalapathy1/fuel-efficiency-elastic-net",
+    category: "ml",
   },
   {
     name: "Regularized Regression Comparison",
-    stack: "Python · scikit-learn",
+    tag: "Python · scikit-learn",
     desc: "Ridge and Lasso regression benchmarked against a plain linear baseline on the mtcars dataset, tuning regularization strength with grid search to reduce mean squared error.",
     url: "https://github.com/rvenkatachalapathy1/ridge-lasso-regression",
+    category: "ml",
   },
 ];
 
@@ -228,9 +273,8 @@ const NAV = [
   { id: "top", label: "Intro" },
   { id: "log", label: "Career Log" },
   { id: "stack", label: "Stack" },
+  { id: "domains", label: "Expertise" },
   { id: "projects", label: "Projects" },
-  { id: "github", label: "GitHub" },
-  { id: "ml", label: "ML Projects" },
   { id: "contact", label: "Contact" },
 ];
 
@@ -250,6 +294,31 @@ function useScrollSpy(ids) {
     return () => obs.disconnect();
   }, [ids]);
   return active;
+}
+
+function useScrollReveal() {
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) return;
+
+    const els = document.querySelectorAll(".animate-in");
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry, index) => {
+          if (entry.isIntersecting) {
+            const delay = entry.target.dataset.delay || 0;
+            setTimeout(() => {
+              entry.target.classList.add("visible");
+            }, Number(delay));
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "-10% 0px -10% 0px", threshold: 0.1 }
+    );
+    els.forEach((el) => obs.observe(el));
+    return () => obs.disconnect();
+  }, [projectFilter]);
 }
 
 function ChangeTag({ kind }) {
@@ -297,7 +366,9 @@ function JobEntry({ job, isOpen, onToggle }) {
 
 export default function Portfolio() {
   const active = useScrollSpy(NAV.map((n) => n.id));
+  useScrollReveal();
   const [openJobs, setOpenJobs] = useState({ "v5.0.0": true });
+  const [projectFilter, setProjectFilter] = useState("all");
 
   const toggleJob = (version) =>
     setOpenJobs((prev) => ({ ...prev, [version]: !prev[version] }));
@@ -310,16 +381,16 @@ export default function Portfolio() {
     <div className="portfolio-root">
       <style>{`
         .portfolio-root {
-          --bg: #0E1226;
-          --bg-panel: #161B33;
-          --bg-panel-2: #1B2140;
-          --border: rgba(255,255,255,0.08);
-          --text: #F5F3EE;
-          --text-muted: #8B93AE;
-          --accent-amber: #FFB100;
-          --accent-teal: #37D6C4;
-          --accent-amber-dim: rgba(255,177,0,0.14);
-          --accent-teal-dim: rgba(55,214,196,0.14);
+          --bg: #F1F5F9;
+          --bg-panel: #FFFFFF;
+          --bg-panel-2: #E2E8F0;
+          --border: rgba(0,0,0,0.08);
+          --text: #0F172A;
+          --text-muted: #64748B;
+          --accent-amber: #D97706;
+          --accent-teal: #0D9488;
+          --accent-amber-dim: rgba(217,119,6,0.12);
+          --accent-teal-dim: rgba(13,148,136,0.12);
 
           background: var(--bg);
           color: var(--text);
@@ -329,7 +400,7 @@ export default function Portfolio() {
           overflow-x: hidden;
         }
         .portfolio-root * { box-sizing: border-box; }
-        .portfolio-root ::selection { background: var(--accent-amber); color: #0E1226; }
+        .portfolio-root ::selection { background: var(--accent-amber); color: #FFFFFF; }
         .portfolio-root a { color: inherit; }
         .portfolio-root button { font-family: inherit; cursor: pointer; }
         .portfolio-root :focus-visible { outline: 2px solid var(--accent-teal); outline-offset: 3px; }
@@ -347,7 +418,7 @@ export default function Portfolio() {
           position: sticky; top: 0; z-index: 20;
           display: flex; align-items: center; justify-content: space-between;
           padding: 18px 6vw;
-          background: rgba(14,18,38,0.82);
+          background: rgba(241,245,249,0.82);
           backdrop-filter: blur(10px);
           border-bottom: 1px solid var(--border);
         }
@@ -478,6 +549,13 @@ export default function Portfolio() {
         @media (max-width: 900px) { .ml-grid { grid-template-columns: 1fr; } }
         .ml-card { display: block; text-decoration: none; color: var(--text); }
 
+        .domains-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+        .domain-pill {
+          background: var(--bg-panel-2); border: 1px solid var(--border); border-radius: 20px;
+          padding: 6px 14px; font-size: 13px; font-family: 'IBM Plex Mono', monospace;
+          color: var(--text-muted); white-space: nowrap;
+        }
+
         .contact-section { padding-bottom: 120px; }
         .contact-box {
           background: linear-gradient(135deg, var(--bg-panel-2), var(--bg-panel));
@@ -494,11 +572,24 @@ export default function Portfolio() {
           font-size: 14px; font-weight: 600; border: 1px solid var(--border); text-decoration: none;
           transition: border-color 0.2s ease, background 0.2s ease;
         }
-        .contact-btn.primary { background: var(--accent-amber); color: #0E1226; border-color: var(--accent-amber); }
-        .contact-btn.primary:hover { background: #ffc433; }
+        .contact-btn.primary { background: var(--accent-amber); color: #FFFFFF; border-color: var(--accent-amber); }
+        .contact-btn.primary:hover { background: #b45309; }
         .contact-btn:not(.primary):hover { border-color: var(--accent-teal); color: var(--accent-teal); }
 
+        .project-filters { display: flex; gap: 10px; margin-bottom: 28px; flex-wrap: wrap; }
+        .filter-btn {
+          background: var(--bg-panel); border: 1px solid var(--border); border-radius: 8px;
+          padding: 8px 16px; font-size: 13px; font-family: 'IBM Plex Mono', monospace;
+          color: var(--text-muted); cursor: pointer; transition: all 0.2s ease;
+        }
+        .filter-btn:hover { border-color: var(--accent-teal); color: var(--text); }
+        .filter-btn.active { background: var(--accent-teal); color: #FFFFFF; border-color: var(--accent-teal); }
+
         footer { text-align: center; padding: 28px 6vw 40px; color: var(--text-muted); font-size: 12px; font-family: 'IBM Plex Mono', monospace; }
+
+        .animate-in { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+        .animate-in.visible { opacity: 1; transform: translateY(0); }
+        @media (prefers-reduced-motion: reduce) { .animate-in { opacity: 1; transform: none; transition: none; } }
       `}</style>
 
       <div className="bg-grid" />
@@ -554,13 +645,14 @@ export default function Portfolio() {
           <p>Every role, read as a release — tap a version to expand the changelog.</p>
         </div>
         <div className="log-list">
-          {JOBS.map((job) => (
-            <JobEntry
-              key={job.version}
-              job={job}
-              isOpen={!!openJobs[job.version]}
-              onToggle={() => toggleJob(job.version)}
-            />
+          {JOBS.map((job, i) => (
+            <div className="animate-in" key={job.version} data-delay={i * 80}>
+              <JobEntry
+                job={job}
+                isOpen={!!openJobs[job.version]}
+                onToggle={() => toggleJob(job.version)}
+              />
+            </div>
           ))}
         </div>
       </section>
@@ -572,8 +664,8 @@ export default function Portfolio() {
           <p>The dependencies I reach for daily, in production.</p>
         </div>
         <div className="stack-panel">
-          {STACK.map((s) => (
-            <div className="stack-row" key={s.key}>
+          {STACK.map((s, i) => (
+            <div className="stack-row animate-in" key={s.key} data-delay={i * 60}>
               <span className="stack-key">{s.key}:</span>
               <span className="stack-value">{s.value}</span>
             </div>
@@ -581,64 +673,51 @@ export default function Portfolio() {
         </div>
       </section>
 
-      <section id="projects">
+      <section id="domains">
         <div className="section-head">
           <span className="section-num">03</span>
-          <h2>Side Projects</h2>
-          <p>Built outside of work, shipped for real users.</p>
+          <h2>Expertise</h2>
+          <p>Domains and practices I've worked in, end to end.</p>
         </div>
-        <div className="projects-grid">
-          {PROJECTS.map((p) => (
-            <div className="project-card" key={p.name}>
-              <h3>{p.name}</h3>
-              <span className="project-tag">{p.tag}</span>
-              <p>{p.desc}</p>
-            </div>
+        <div className="domains-grid">
+          {DOMAINS.map((d, i) => (
+            <span className="domain-pill animate-in" key={d} data-delay={i * 30}>{d}</span>
           ))}
         </div>
       </section>
 
-      <section id="github">
+      <section id="projects">
         <div className="section-head">
           <span className="section-num">04</span>
-          <h2>GitHub Projects</h2>
-          <p>Pulled straight from the repo list — full stack apps, data work, and systems experiments.</p>
+          <h2>Projects</h2>
+          <p>A selection of side projects, GitHub repos, and ML work.</p>
         </div>
-        <div className="projects-grid github-grid">
-          {GITHUB_PROJECTS.map((p) => (
-            <a className="project-card github-card" key={p.name} href={p.url} target="_blank" rel="noreferrer">
+        <div className="project-filters">
+          {["all", "ml"].map((f) => (
+            <button
+              key={f}
+              className={`filter-btn ${projectFilter === f ? "active" : ""}`}
+              onClick={() => setProjectFilter(f)}
+            >
+              {f === "all" ? "All" : "ML & Data"}
+            </button>
+          ))}
+        </div>
+        <div className="projects-grid" key={projectFilter}>
+          {ALL_PROJECTS.filter((p) => projectFilter === "all" || p.category === projectFilter).map((p, i) => (
+            <a className="project-card animate-in" key={p.name} href={p.url || "#"} target="_blank" rel="noreferrer" data-delay={i * 60}>
               <div className="github-card-head">
                 <h3>{p.name}</h3>
                 <ArrowUpRight size={16} className="github-card-arrow" />
               </div>
               <span className="project-tag">
-                {p.lang}
+                {p.tag}
                 {p.starred && (
                   <span className="github-star">
                     <Star size={11} fill="currentColor" /> 1
                   </span>
                 )}
               </span>
-              <p>{p.desc}</p>
-            </a>
-          ))}
-        </div>
-      </section>
-
-      <section id="ml">
-        <div className="section-head">
-          <span className="section-num">05</span>
-          <h2>ML &amp; Data Science Projects</h2>
-          <p>Coursework and independent modeling work, each with a linked repo.</p>
-        </div>
-        <div className="projects-grid ml-grid">
-          {ML_PROJECTS.map((p) => (
-            <a className="project-card ml-card" key={p.name} href={p.url} target="_blank" rel="noreferrer">
-              <div className="github-card-head">
-                <h3>{p.name}</h3>
-                <ArrowUpRight size={16} className="github-card-arrow" />
-              </div>
-              <span className="project-tag">{p.stack}</span>
               <p>{p.desc}</p>
             </a>
           ))}
