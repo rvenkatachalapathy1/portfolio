@@ -114,6 +114,13 @@ const DOMAINS = [
 
 const ALL_PROJECTS = [
   {
+    name: "React Portfolio",
+    tag: "React · Vite",
+    desc: "Personal portfolio website built with React and Vite, featuring a changelog style career log, tech stack showcase, and project gallery with filtering.",
+    url: "https://github.com/rvenkatachalapathy1/portfolio",
+    category: "side",
+  },
+  {
     name: "Drink Tracker",
     tag: "Vanilla JS · Supabase",
     desc: "Full stack real time drink tracking app for 30+ users — live leaderboard, advanced filtering, Excel export, hosted at zero ongoing cost.",
@@ -296,7 +303,7 @@ function useScrollSpy(ids) {
   return active;
 }
 
-function useScrollReveal() {
+function useScrollReveal(filter) {
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) return;
@@ -304,7 +311,7 @@ function useScrollReveal() {
     const els = document.querySelectorAll(".animate-in");
     const obs = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry, index) => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const delay = entry.target.dataset.delay || 0;
             setTimeout(() => {
@@ -318,7 +325,7 @@ function useScrollReveal() {
     );
     els.forEach((el) => obs.observe(el));
     return () => obs.disconnect();
-  }, [projectFilter]);
+  }, [filter]);
 }
 
 function ChangeTag({ kind }) {
@@ -366,9 +373,10 @@ function JobEntry({ job, isOpen, onToggle }) {
 
 export default function Portfolio() {
   const active = useScrollSpy(NAV.map((n) => n.id));
-  useScrollReveal();
   const [openJobs, setOpenJobs] = useState({ "v5.0.0": true });
   const [projectFilter, setProjectFilter] = useState("all");
+  const [githubDropdownOpen, setGithubDropdownOpen] = useState(false);
+  useScrollReveal(projectFilter);
 
   const toggleJob = (version) =>
     setOpenJobs((prev) => ({ ...prev, [version]: !prev[version] }));
@@ -377,20 +385,29 @@ export default function Portfolio() {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  useEffect(() => {
+    const handleClickOutside = () => setGithubDropdownOpen(false);
+    if (githubDropdownOpen) {
+      document.addEventListener("click", handleClickOutside);
+      return () => document.removeEventListener("click", handleClickOutside);
+    }
+  }, [githubDropdownOpen]);
+
   return (
     <div className="portfolio-root">
       <style>{`
         .portfolio-root {
-          --bg: #F1F5F9;
+          /* Color Scheme: Lime Green */
+          --bg: #F8FBF6;
           --bg-panel: #FFFFFF;
-          --bg-panel-2: #E2E8F0;
-          --border: rgba(0,0,0,0.08);
-          --text: #0F172A;
-          --text-muted: #64748B;
-          --accent-amber: #D97706;
-          --accent-teal: #0D9488;
-          --accent-amber-dim: rgba(217,119,6,0.12);
-          --accent-teal-dim: rgba(13,148,136,0.12);
+          --bg-panel-2: #E8F5D4;
+          --border: rgba(0,0,0,0.06);
+          --text: #1F3D1A;
+          --text-muted: #6B8A4A;
+          --accent-amber: #F4D03F;
+          --accent-teal: #84CC16;
+          --accent-amber-dim: rgba(244,208,63,0.15);
+          --accent-teal-dim: rgba(132,204,22,0.15);
 
           background: var(--bg);
           color: var(--text);
@@ -408,10 +425,17 @@ export default function Portfolio() {
         .bg-grid {
           position: absolute; inset: 0; pointer-events: none; z-index: 0;
           background-image:
-            linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+            linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
           background-size: 48px 48px;
-          mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+          mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 100%);
+        }
+        .bg-gradient {
+          position: absolute; inset: 0; pointer-events: none; z-index: 0;
+          background: 
+            radial-gradient(ellipse 80% 50% at 20% 40%, var(--accent-teal-dim) 0%, transparent 50%),
+            radial-gradient(ellipse 60% 40% at 80% 60%, var(--accent-amber-dim) 0%, transparent 50%);
+          opacity: 0.6;
         }
 
         .nav {
@@ -436,6 +460,23 @@ export default function Portfolio() {
         }
         .nav-link:hover { color: var(--text); }
         .nav-link.active { color: var(--accent-teal); border-color: var(--accent-teal); }
+        .nav-linkedin {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 36px;
+          height: 36px;
+          border-radius: 8px;
+          border: 1px solid var(--border);
+          color: var(--text-muted);
+          transition: all 0.2s ease;
+          text-decoration: none;
+        }
+        .nav-linkedin:hover {
+          color: var(--accent-teal);
+          border-color: var(--accent-teal);
+          transform: translateY(-2px);
+        }
         @media (max-width: 720px) { .nav-links { display: none; } }
 
         section { position: relative; z-index: 1; padding: 90px 6vw; }
@@ -526,13 +567,31 @@ export default function Portfolio() {
         @media (max-width: 900px) { .projects-grid { grid-template-columns: 1fr; } }
         .project-card {
           background: var(--bg-panel); border: 1px solid var(--border); border-radius: 14px; padding: 26px;
-          transition: border-color 0.2s ease, transform 0.2s ease;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          position: relative;
+          overflow: hidden;
         }
-        .project-card:hover { border-color: var(--accent-teal); transform: translateY(-3px); }
+        .project-card::before {
+          content: '';
+          position: absolute;
+          top: 0; left: 0; right: 0; height: 3px;
+          background: linear-gradient(90deg, var(--accent-teal), var(--accent-amber));
+          transform: scaleX(0);
+          transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .project-card:hover::before { transform: scaleX(1); }
+        .project-card:hover { 
+          border-color: var(--accent-teal); 
+          transform: translateY(-6px);
+          box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+        }
         .project-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 18px; margin: 0 0 10px; }
         .project-tag {
           font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent-teal);
           display: inline-block; margin-bottom: 14px;
+          background: var(--accent-teal-dim);
+          padding: 4px 10px;
+          border-radius: 6px;
         }
         .project-card p { color: var(--text-muted); font-size: 14px; line-height: 1.6; margin: 0; }
 
@@ -558,23 +617,91 @@ export default function Portfolio() {
 
         .contact-section { padding-bottom: 120px; }
         .contact-box {
-          background: linear-gradient(135deg, var(--bg-panel-2), var(--bg-panel));
+          background: linear-gradient(135deg, var(--bg-panel-2) 0%, var(--bg-panel) 100%);
           border: 1px solid var(--border); border-radius: 20px; padding: 56px 6vw;
-          display: flex; flex-direction: column; align-items: flex-start; gap: 22px;
+          display: flex; flex-direction: column; align-items: center; text-align: center; gap: 22px;
+          position: relative;
+        }
+        .contact-box::before {
+          content: '';
+          position: absolute;
+          top: -50%; right: -10%;
+          width: 300px; height: 300px;
+          background: radial-gradient(circle, var(--accent-teal-dim) 0%, transparent 70%);
+          border-radius: 50%;
+          pointer-events: none;
         }
         .contact-box h2 {
           font-family: 'Space Grotesk', sans-serif; font-size: clamp(26px, 4vw, 42px); margin: 0; max-width: 16ch;
+          position: relative; z-index: 1;
         }
         .contact-box h2 em { font-style: normal; color: var(--accent-amber); }
-        .contact-links { display: flex; gap: 14px; flex-wrap: wrap; }
+        .contact-links { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; position: relative; z-index: 1; }
         .contact-btn {
           display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 10px;
           font-size: 14px; font-weight: 600; border: 1px solid var(--border); text-decoration: none;
-          transition: border-color 0.2s ease, background 0.2s ease;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          position: relative;
+          overflow: hidden;
         }
+        .contact-btn::before {
+          content: '';
+          position: absolute;
+          top: 50%; left: 50%;
+          width: 0; height: 0;
+          background: rgba(255,255,255,0.2);
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          transition: width 0.4s ease, height 0.4s ease;
+        }
+        .contact-btn:hover::before { width: 200px; height: 200px; }
         .contact-btn.primary { background: var(--accent-amber); color: #FFFFFF; border-color: var(--accent-amber); }
-        .contact-btn.primary:hover { background: #b45309; }
-        .contact-btn:not(.primary):hover { border-color: var(--accent-teal); color: var(--accent-teal); }
+        .contact-btn.primary:hover { 
+          background: #b45309;
+          transform: translateY(-2px);
+          box-shadow: 0 8px 16px rgba(217,119,6,0.25);
+        }
+        .contact-btn:not(.primary):hover { 
+          border-color: var(--accent-teal); 
+          color: var(--accent-teal);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 16px rgba(13,148,136,0.15);
+        }
+
+        .github-dropdown { position: relative; }
+        .github-dropdown-menu {
+          position: absolute;
+          top: calc(100% + 8px);
+          left: 0;
+          background: var(--bg-panel);
+          border: 1px solid var(--border);
+          border-radius: 10px;
+          padding: 6px;
+          min-width: 180px;
+          box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+          z-index: 100;
+          animation: dropdownFade 0.2s ease;
+        }
+        @keyframes dropdownFade {
+          from { opacity: 0; transform: translateY(-8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .github-dropdown-item {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 10px 14px;
+          border-radius: 6px;
+          color: var(--text);
+          text-decoration: none;
+          font-size: 13px;
+          font-weight: 500;
+          transition: all 0.2s ease;
+        }
+        .github-dropdown-item:hover {
+          background: var(--bg-panel-2);
+          color: var(--accent-teal);
+        }
 
         .project-filters { display: flex; gap: 10px; margin-bottom: 28px; flex-wrap: wrap; }
         .filter-btn {
@@ -585,7 +712,15 @@ export default function Portfolio() {
         .filter-btn:hover { border-color: var(--accent-teal); color: var(--text); }
         .filter-btn.active { background: var(--accent-teal); color: #FFFFFF; border-color: var(--accent-teal); }
 
-        footer { text-align: center; padding: 28px 6vw 40px; color: var(--text-muted); font-size: 12px; font-family: 'IBM Plex Mono', monospace; }
+        footer { 
+          text-align: center; 
+          padding: 28px 6vw 40px; 
+          color: var(--text-muted); 
+          font-size: 12px; 
+          font-family: 'IBM Plex Mono', monospace;
+          position: relative;
+          z-index: 1;
+        }
 
         .animate-in { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
         .animate-in.visible { opacity: 1; transform: translateY(0); }
@@ -593,10 +728,11 @@ export default function Portfolio() {
       `}</style>
 
       <div className="bg-grid" />
+      <div className="bg-gradient" />
 
       <nav className="nav">
         <div className="nav-brand">
-          RAKSHITH<span>.</span>V
+          RAKSHITH<span>.</span>VENKATACHALAPATHY
         </div>
         <div className="nav-links">
           {NAV.map((n) => (
@@ -609,6 +745,19 @@ export default function Portfolio() {
             </button>
           ))}
         </div>
+        <a
+          className="nav-linkedin"
+          href="https://linkedin.com/in/rakshith-venkat/"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="LinkedIn Profile"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+            <rect width="4" height="12" x="2" y="9"/>
+            <circle cx="4" cy="4" r="2"/>
+          </svg>
+        </a>
       </nav>
 
       <section className="hero" id="top">
@@ -616,12 +765,12 @@ export default function Portfolio() {
           <span className="dot" /> 
         </div>
         <h1>
-          Systems that move money. <em>Reliably.</em>
+           Payments infrastructure that just works. <em>Reliably.</em>
         </h1>
         <p className="lede">
-          Senior Software Engineer with 5+ years owning payment and fraud prevention systems end to end 
-          from spec to production scale. I turn ambiguous risk, compliance, and product requirements into
-          reusable APIs other teams build on, and I'm AI native in daily engineering workflows.
+          I'm a Senior Software Engineer who has spent 5+ years shipping payment and fraud systems that
+          handle real financial risk, real compliance requirements, and real transaction volume. 
+          My work becomes the API other teams depend on, and I build it with AI native tools baked into my daily workflow.
         </p>
         <div className="hero-meta">
           <span><MapPin size={14} /> San Francisco, CA</span>
@@ -741,19 +890,44 @@ export default function Portfolio() {
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg> LinkedIn <ArrowUpRight size={14} />
             </a>
-            <a
-              className="contact-btn"
-              href="https://github.com/rakshithvenkatachalapathy"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg> GitHub <ArrowUpRight size={14} />
-            </a>
+            <div className="github-dropdown">
+              <button
+                className="contact-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setGithubDropdownOpen(!githubDropdownOpen);
+                }}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg> GitHub <ArrowUpRight size={14} />
+              </button>
+              {githubDropdownOpen && (
+                <div className="github-dropdown-menu">
+                  <a
+                    href="https://github.com/rvenkatachalapathy1"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="github-dropdown-item"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                    GitHub Profile
+                  </a>
+                  <a
+                    href="https://github.com/rvenkatachalapathy1/portfolio"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="github-dropdown-item"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                    Portfolio Repo
+                  </a>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </section>
 
-      <footer>206 539 7984 · San Francisco, CA · v5.0.0 — currently shipping</footer>
+      <footer> San Francisco, CA · v5.0.0 — currently shipping</footer>
     </div>
   );
 }
