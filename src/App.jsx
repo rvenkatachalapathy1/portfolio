@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useCallback, useMemo, useState } from "react";
 import { Mail, ChevronDown, ArrowUpRight, MapPin, Star } from "lucide-react";
 
 const METRICS = [
@@ -118,6 +118,13 @@ const ALL_PROJECTS = [
     tag: "React · Vite",
     desc: "Personal portfolio website built with React and Vite, featuring a changelog style career log, tech stack showcase, and project gallery with filtering.",
     url: "https://github.com/rvenkatachalapathy1/portfolio",
+    category: "side",
+  },
+  {
+    name: "Tracking Vaccine Hesitancy",
+    tag: "Observable · Data Visualization",
+    desc: "Interactive visualization tracking vaccine hesitancy trends across different time periods and geospatial locations.",
+    url: "https://observablehq.com/@5d57245f79dd37fb/tracking-vaccine-hesitancy",
     category: "side",
   },
   {
@@ -328,7 +335,7 @@ function useScrollReveal(filter) {
   }, [filter]);
 }
 
-function ChangeTag({ kind }) {
+const ChangeTag = React.memo(function ChangeTag({ kind }) {
   const colorMap = {
     Added: "var(--accent-teal)",
     Shipped: "var(--accent-amber)",
@@ -340,9 +347,9 @@ function ChangeTag({ kind }) {
       {kind}
     </span>
   );
-}
+});
 
-function JobEntry({ job, isOpen, onToggle }) {
+const JobEntry = React.memo(function JobEntry({ job, isOpen, onToggle }) {
   return (
     <div className="job">
       <button className="job-head" onClick={onToggle} aria-expanded={isOpen}>
@@ -369,7 +376,7 @@ function JobEntry({ job, isOpen, onToggle }) {
       </div>
     </div>
   );
-}
+});
 
 export default function Portfolio() {
   const active = useScrollSpy(NAV.map((n) => n.id));
@@ -378,12 +385,21 @@ export default function Portfolio() {
   const [githubDropdownOpen, setGithubDropdownOpen] = useState(false);
   useScrollReveal(projectFilter);
 
-  const toggleJob = (version) =>
-    setOpenJobs((prev) => ({ ...prev, [version]: !prev[version] }));
+  const filteredProjects = useMemo(
+    () => ALL_PROJECTS.filter((p) => projectFilter === "all" || p.category === projectFilter),
+    [projectFilter]
+  );
 
-  const scrollTo = (id) => {
+  const toggleJob = useCallback((version) =>
+    setOpenJobs((prev) => ({ ...prev, [version]: !prev[version] })), []);
+
+  const scrollTo = useCallback((id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
+  }, []);
+
+  const handleFilterChange = useCallback((filter) => {
+    setProjectFilter(filter);
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = () => setGithubDropdownOpen(false);
@@ -499,6 +515,7 @@ export default function Portfolio() {
         }
         .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; font-size: 14px; color: var(--text-muted); }
         .hero-meta span { display: flex; align-items: center; gap: 6px; }
+
 
         .ticker-wrap {
           margin-top: 56px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
@@ -724,6 +741,7 @@ export default function Portfolio() {
 
         .animate-in { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
         .animate-in.visible { opacity: 1; transform: translateY(0); }
+        .project-card.animate-in { transition: opacity 0.15s ease, transform 0.15s ease; }
         @media (prefers-reduced-motion: reduce) { .animate-in { opacity: 1; transform: none; transition: none; } }
       `}</style>
 
@@ -765,12 +783,10 @@ export default function Portfolio() {
           <span className="dot" /> 
         </div>
         <h1>
-           Payments infrastructure that just works. <em>Reliably.</em>
+           Reliable systems, <em>end to end.</em>
         </h1>
         <p className="lede">
-          I'm a Senior Software Engineer who has spent 5+ years shipping payment and fraud systems that
-          handle real financial risk, real compliance requirements, and real transaction volume. 
-          My work becomes the API other teams depend on, and I build it with AI native tools baked into my daily workflow.
+          I'm a Senior Software Engineer who has spent 5+ years designing and scaling backend services and microservices, from gift card and seller financing platforms to fraud prevention and campaign infrastructure, owning them from spec through production. My work becomes the foundation other teams build on, and I build it with AI native tools daily.
         </p>
         <div className="hero-meta">
           <span><MapPin size={14} /> San Francisco, CA</span>
@@ -846,15 +862,15 @@ export default function Portfolio() {
             <button
               key={f}
               className={`filter-btn ${projectFilter === f ? "active" : ""}`}
-              onClick={() => setProjectFilter(f)}
+              onClick={() => handleFilterChange(f)}
             >
               {f === "all" ? "All" : "ML & Data"}
             </button>
           ))}
         </div>
         <div className="projects-grid" key={projectFilter}>
-          {ALL_PROJECTS.filter((p) => projectFilter === "all" || p.category === projectFilter).map((p, i) => (
-            <a className="project-card animate-in" key={p.name} href={p.url || "#"} target="_blank" rel="noreferrer" data-delay={i * 60}>
+          {filteredProjects.map((p) => (
+            <a className="project-card animate-in" key={p.name} href={p.url || "#"} target="_blank" rel="noreferrer">
               <div className="github-card-head">
                 <h3>{p.name}</h3>
                 <ArrowUpRight size={16} className="github-card-arrow" />
