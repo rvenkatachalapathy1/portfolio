@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useMemo, useState } from "react";
-import { Mail, ChevronDown, ArrowUpRight, MapPin, Star } from "lucide-react";
+import { Mail, ChevronDown, ArrowUpRight, MapPin, Star, Copy, Check, Menu, X } from "lucide-react";
 
 const METRICS = [
   "60x campaign capacity · 2s → 150ms latency",
@@ -38,10 +38,10 @@ const JOBS = [
     dates: "Feb 2022 — Sep 2022",
     changes: [
       { kind: "Shipped", text: "Go backend microservices handling 70,000+ requests/day for a high traffic platform." },
-      { kind: "Improved", text: "Query plans on a 100TB+ PostgreSQL dataset — response times cut from seconds to milliseconds." },
-      { kind: "Added", text: "Circuit breakers and retry logic across distributed service boundaries." },
-      { kind: "Added", text: "Observability stack: metrics, distributed tracing, structured logging, cutting incident detection and response time." },
-      { kind: "Added", text: "Automated engineering workflows to raise deployment reliability and speed up developer velocity." },
+      { kind: "Added", text: "REST APIs designed with Python, unit testing, and debugging to ingest data running through the dashboard." },
+      { kind: "Improved", text: "Managed and supported a large PostgreSQL database with over 100TB of data, including backups, restores, and monitoring." },
+      { kind: "Added", text: "Integrated tools like DataDog and Mixpanel for logging, metrics, and tracing using GoLang." },
+      { kind: "Improved", text: "Identified tracking errors between the app and analytics property, saving the company $1500 monthly in lost revenue." },
     ],
   },
   {
@@ -50,8 +50,9 @@ const JOBS = [
     org: "Kineviz",
     dates: "Aug 2021 — Dec 2021",
     changes: [
-      { kind: "Shipped", text: "Analytical pipeline processing large scale datasets into spatial layouts, surfacing relational patterns and thematic clusters." },
-      { kind: "Added", text: "Custom graph schema for structuring high dimensional connected data." },
+      { kind: "Shipped", text: "New insights and patterns regarding public sentiment to COVID-19 vaccine using the Twitter COVID dataset." },
+      { kind: "Added", text: "Visualization of sentiment analysis results using GraphXR platform to enable data modeling and analysis." },
+      { kind: "Added", text: "Visualization of high dimensional and connected data, querying from PostgreSQL, along with designing a graph data model." },
     ],
   },
   {
@@ -60,8 +61,9 @@ const JOBS = [
     org: "Whiznook",
     dates: "Jan 2021 — May 2021",
     changes: [
-      { kind: "Shipped", text: "REST and GraphQL endpoints with efficient schema design — cut frontend rollout timelines by 15%." },
-      { kind: "Improved", text: "Vue.js and Node.js rendering paths — 2 minutes shaved off load time per session." },
+      { kind: "Shipped", text: "Highly interactive and customized UIs using Vue.js and Node.js to improve component load time for an average user by two minutes." },
+      { kind: "Improved", text: "REST APIs to query large user data from GraphQL for both internal and external use, reducing time to ship new front-end features by 15% in the business release." },
+      { kind: "Added", text: "Data visualizations with d3.js using responsive graphs for web pages to help end users analyze results." },
     ],
   },
   {
@@ -70,9 +72,12 @@ const JOBS = [
     org: "Tech Mahindra Ltd.",
     dates: "Nov 2014 — Jul 2019",
     changes: [
-      { kind: "Shipped", text: "4–8 internal platform APIs in Java, centralizing employee data, credentials, and logging at enterprise scale." },
-      { kind: "Added", text: "Automated testing framework on the competency team, cutting time to write test cases by 50% across emerging open source technology delivered for nine clients in different domains." },
-      { kind: "Improved", text: "REST derived data pipelines in PostgreSQL — processing efficiency up 20%." },
+      { kind: "Shipped", text: "Part of the product development team responsible for API design and development of RESTful services for shipping the enterprise product in the business release." },
+      { kind: "Improved", text: "Built web services with Python that were used by the customer-facing app to improve the time on the page for the average user by 2 minutes." },
+      { kind: "Added", text: "Designed a keyword driven approach to reduce the time taken for debugging and to write test cases by 60%." },
+      { kind: "Added", text: "Developed a Python based library to read Webservice data from a RESTful API and perform automation on the same." },
+      { kind: "Improved", text: "Used MySQL to store and perform automation operations on the RESTful data, improving effectiveness by 20%." },
+      { kind: "Added", text: "Designed backend libraries to automate mobile apps and Perfecto mobile cloud to help clients leverage the benefits of automation on the cloud." },
     ],
   },
 ];
@@ -205,11 +210,46 @@ const ALL_PROJECTS = [
     category: "github",
   },
   {
-    name: "D3.js Visualization Series",
-    tag: "JavaScript",
-    desc: "Line charts, parallel coordinates, scatter plot matrices, force displacement graphs, and choropleth maps — a set of d3.js chart types built from scratch.",
-    url: "https://github.com/rakshithvenkatachalapathy/D3-Projects",
-    category: "github",
+    name: "Line Charts",
+    tag: "JavaScript · d3.js",
+    desc: "Interactive line chart visualization built with D3.js for temporal data analysis.",
+    url: "https://github.com/rakshithvenkatachalapathy/D3-Projects/tree/main/A5",
+    category: "visualization",
+  },
+  {
+    name: "Parallel Coordinates",
+    tag: "JavaScript · d3.js",
+    desc: "Multivariate data visualization using parallel coordinates plot built with D3.js.",
+    url: "https://github.com/rakshithvenkatachalapathy/D3-Projects/tree/main/A6",
+    category: "visualization",
+  },
+  {
+    name: "Scatter Plot Matrix",
+    tag: "JavaScript · d3.js",
+    desc: "Scatter plot matrix for exploring relationships between multiple variables using D3.js.",
+    url: "https://github.com/rakshithvenkatachalapathy/D3-Projects/tree/main/A7",
+    category: "visualization",
+  },
+  {
+    name: "Force Displacement Graph",
+    tag: "JavaScript · d3.js",
+    desc: "Force-directed graph visualization showing node relationships and network structures with D3.js.",
+    url: "https://github.com/rakshithvenkatachalapathy/D3-Projects/tree/main/A8",
+    category: "visualization",
+  },
+  {
+    name: "Choropleth Maps",
+    tag: "JavaScript · d3.js",
+    desc: "Geographic data visualization using choropleth maps built with D3.js for spatial analysis.",
+    url: "https://github.com/rakshithvenkatachalapathy/D3-Projects/tree/main/A9",
+    category: "visualization",
+  },
+  {
+    name: "Advanced Visualization",
+    tag: "JavaScript · d3.js",
+    desc: "Advanced D3.js visualization techniques and custom chart implementations.",
+    url: "https://github.com/rakshithvenkatachalapathy/D3-Projects/tree/main/A10",
+    category: "visualization",
   },
   {
     name: "Toll Payment Method Predictor",
@@ -383,6 +423,8 @@ export default function Portfolio() {
   const [openJobs, setOpenJobs] = useState({ "v5.0.0": true });
   const [projectFilter, setProjectFilter] = useState("all");
   const [githubDropdownOpen, setGithubDropdownOpen] = useState(false);
+  const [copiedEmail, setCopiedEmail] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   useScrollReveal(projectFilter);
 
   const filteredProjects = useMemo(
@@ -395,10 +437,17 @@ export default function Portfolio() {
 
   const scrollTo = useCallback((id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setMobileMenuOpen(false);
   }, []);
 
   const handleFilterChange = useCallback((filter) => {
     setProjectFilter(filter);
+  }, []);
+
+  const handleCopyEmail = useCallback(() => {
+    navigator.clipboard.writeText("rakshithvenkat11@gmail.com");
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2000);
   }, []);
 
   useEffect(() => {
@@ -493,7 +542,54 @@ export default function Portfolio() {
           border-color: var(--accent-teal);
           transform: translateY(-2px);
         }
-        @media (max-width: 720px) { .nav-links { display: none; } }
+        .nav-hamburger { display: none; }
+        @media (max-width: 720px) { 
+          .nav-hamburger {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text);
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            padding: 0;
+            transition: all 0.2s ease;
+          }
+          .nav-hamburger:hover { color: var(--accent-teal); border-color: var(--accent-teal); }
+          .nav-links {
+            display: flex;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            flex-direction: column;
+            gap: 0;
+            background: rgba(241,245,249,0.97);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            padding: 8px 6vw;
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.25s ease;
+          }
+          .nav-links.mobile-open {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+          }
+          .nav-link {
+            font-size: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+            width: 100%;
+          }
+          .nav-link:last-child { border-bottom: none; }
+          .nav-linkedin { display: none; }
+        }
 
         section { position: relative; z-index: 1; padding: 90px 6vw; }
 
@@ -654,6 +750,12 @@ export default function Portfolio() {
         }
         .contact-box h2 em { font-style: normal; color: var(--accent-amber); }
         .contact-links { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; position: relative; z-index: 1; }
+        @media (max-width: 640px) {
+          .contact-links { flex-direction: column; align-items: stretch; }
+          .contact-links > * { width: 100%; }
+          .contact-links .github-dropdown { width: 100%; }
+          .contact-links .github-dropdown > button { width: 100%; }
+        }
         .contact-btn {
           display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 10px;
           font-size: 14px; font-weight: 600; border: 1px solid var(--border); text-decoration: none;
@@ -683,6 +785,16 @@ export default function Portfolio() {
           color: var(--accent-teal);
           transform: translateY(-2px);
           box-shadow: 0 8px 16px rgba(13,148,136,0.15);
+        }
+        .copy-btn.copied {
+          background: var(--accent-teal);
+          color: #FFFFFF;
+          border-color: var(--accent-teal);
+        }
+        .copy-btn.copied:hover {
+          background: #6B9E12;
+          transform: translateY(-2px);
+          box-shadow: 0 8px 16px rgba(132,204,22,0.25);
         }
 
         .github-dropdown { position: relative; }
@@ -752,7 +864,14 @@ export default function Portfolio() {
         <div className="nav-brand">
           RAKSHITH<span>.</span>VENKATACHALAPATHY
         </div>
-        <div className="nav-links">
+        <button
+          className="nav-hamburger"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle navigation menu"
+        >
+          {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+        <div className={`nav-links ${mobileMenuOpen ? "mobile-open" : ""}`}>
           {NAV.map((n) => (
             <button
               key={n.id}
@@ -855,16 +974,16 @@ export default function Portfolio() {
         <div className="section-head">
           <span className="section-num">04</span>
           <h2>Projects</h2>
-          <p>A selection of side projects, GitHub repos, and ML work.</p>
+          <p>A selection of side projects, visualizations, GitHub repos, and ML work.</p>
         </div>
         <div className="project-filters">
-          {["all", "ml"].map((f) => (
+          {["all", "visualization", "ml"].map((f) => (
             <button
               key={f}
               className={`filter-btn ${projectFilter === f ? "active" : ""}`}
               onClick={() => handleFilterChange(f)}
             >
-              {f === "all" ? "All" : "ML & Data"}
+              {f === "all" ? "All" : f === "visualization" ? "Visualization" : "ML & Data"}
             </button>
           ))}
         </div>
@@ -898,6 +1017,10 @@ export default function Portfolio() {
             <a className="contact-btn primary" href="mailto:rakshithvenkat11@gmail.com">
               <Mail size={16} /> Email me
             </a>
+            <button className={`contact-btn copy-btn ${copiedEmail ? "copied" : ""}`} onClick={handleCopyEmail}>
+              {copiedEmail ? <Check size={16} /> : <Copy size={16} />}
+              {copiedEmail ? "Copied!" : "Copy email"}
+            </button>
             <a
               className="contact-btn"
               href="https://linkedin.com/in/rakshith-venkat/"
